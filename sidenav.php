@@ -38,6 +38,12 @@ $conn->close();
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="job-seeker-profile.php">
+                    <i class="bi bi-person"></i>
+                    <span>Profile</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="document-collection.php">
                     <i class="bi bi-folder"></i>
                     <span>Document Collection</span>
@@ -55,12 +61,7 @@ $conn->close();
                     <span>Jobs</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="profile.php">
-                    <i class="bi bi-person"></i>
-                    <span>Profile</span>
-                </a>
-            </li>
+         
             <li class="nav-item">
                 <a class="nav-link" href="logout.php">
                     <i class="bi bi-box-arrow-right"></i>
