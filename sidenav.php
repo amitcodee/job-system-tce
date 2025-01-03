@@ -152,6 +152,12 @@ $conn->close();
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="all_message_query.php">
+                    <i class="bi bi-chat"></i>
+                    <span>All Quesry</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="logout.php">
                     <i class="bi bi-box-arrow-right"></i>
                     <span>Logout</span>
