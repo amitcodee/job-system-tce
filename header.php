@@ -56,51 +56,63 @@ $stmt->close();
                 </a><!-- End Profile Image Icon -->
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                    <li class="dropdown-header">
-                        <h6><?= $userName ?></h6>
-                        <span><?= ucfirst($userRole) ?></span>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+    <li class="dropdown-header">
+        <h6><?= htmlspecialchars($userName); ?></h6>
+        <span><?= ucfirst(htmlspecialchars($userRole)); ?></span>
+    </li>
+    <li>
+        <hr class="dropdown-divider">
+    </li>
 
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center" href="profile.php">
-                            <i class="bi bi-person"></i>
-                            <span>My Profile</span>
-                        </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+    <li>
+        <a class="dropdown-item d-flex align-items-center" href="<?php
+            // Redirect to specific profile pages based on the user role
+            if ($userRole === 'admin') {
+                echo 'admin-profile.php';
+            } elseif ($userRole === 'job_provider') {
+                echo 'job-provider-profile.php';
+            } elseif ($userRole === 'job_seeker') {
+                echo 'job-seeker-profile.php';
+            } else {
+                echo 'profile.php'; // Fallback to a generic profile page
+            }
+        ?>">
+            <i class="bi bi-person"></i>
+            <span>My Profile</span>
+        </a>
+    </li>
+    <li>
+        <hr class="dropdown-divider">
+    </li>
 
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center" href="account-settings.php">
-                            <i class="bi bi-gear"></i>
-                            <span>Account Settings</span>
-                        </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+    <li>
+        <a class="dropdown-item d-flex align-items-center" href="account-settings.php">
+            <i class="bi bi-gear"></i>
+            <span>Account Settings</span>
+        </a>
+    </li>
+    <li>
+        <hr class="dropdown-divider">
+    </li>
 
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center" href="faq.php">
-                            <i class="bi bi-question-circle"></i>
-                            <span>Need Help?</span>
-                        </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+    <li>
+        <a class="dropdown-item d-flex align-items-center" href="message-us.php">
+            <i class="bi bi-question-circle"></i>
+            <span>Need Help?</span>
+        </a>
+    </li>
+    <li>
+        <hr class="dropdown-divider">
+    </li>
 
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center" href="logout.php">
-                            <i class="bi bi-box-arrow-right"></i>
-                            <span>Sign Out</span>
-                        </a>
-                    </li>
-                </ul><!-- End Profile Dropdown Items -->
+    <li>
+        <a class="dropdown-item d-flex align-items-center" href="logout.php">
+            <i class="bi bi-box-arrow-right"></i>
+            <span>Sign Out</span>
+        </a>
+    </li>
+</ul>
+<!-- End Profile Dropdown Items -->
             </li><!-- End Profile Nav -->
         </ul>
     </nav><!-- End Icons Navigation -->

@@ -101,9 +101,9 @@ $conn->close();
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="messages.php">
+                <a class="nav-link" href="job-provider-profile.php">
                     <i class="bi bi-chat"></i>
-                    <span>Messages</span>
+                    <span>Profile</span>
                 </a>
             </li>
             <li class="nav-item">
