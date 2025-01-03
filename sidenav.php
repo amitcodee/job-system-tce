@@ -61,7 +61,7 @@ $conn->close();
                     <span>Jobs</span>
                 </a>
             </li>
-         
+
             <li class="nav-item">
                 <a class="nav-link" href="logout.php">
                     <i class="bi bi-box-arrow-right"></i>
@@ -138,11 +138,17 @@ $conn->close();
                     <span>All Companies</span>
                 </a>
             </li>
-          
             <li class="nav-item">
-                <a class="nav-link" href="messages.php">
+                <a class="nav-link" href="all-job.php">
+                    <i class="bi bi-building"></i>
+                    <span>All Jobs</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="job_match.php">
                     <i class="bi bi-chat"></i>
-                    <span>Messages</span>
+                    <span>Job Match</span>
                 </a>
             </li>
             <li class="nav-item">
