@@ -151,6 +151,13 @@ $conn->close();
                     <span>Job Match</span>
                 </a>
             </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="placement-data.php">
+                    <i class="bi bi-chat"></i>
+                    <span>Placement Data</span>
+                </a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="all_message_query.php">
                     <i class="bi bi-chat"></i>
