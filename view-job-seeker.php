@@ -38,22 +38,25 @@ if (!$user) {
 
         <!-- Personal Information -->
         <div class="card mb-4">
-            <div class="card-header">Personal Information</div>
-            <div class="card-body">
-                <p><strong>Name:</strong> <?= htmlspecialchars($user['name']); ?></p>
-                <p><strong>Email:</strong> <?= htmlspecialchars($user['email']); ?></p>
-                <p><strong>Phone:</strong> <?= htmlspecialchars($user['phone']); ?></p>
-                <p><strong>Date of Birth:</strong> <?= htmlspecialchars($user['dob'] ?? 'N/A'); ?></p>
-                <p><strong>Address:</strong> <?= htmlspecialchars($user['address'] ?? 'N/A'); ?></p>
-                <p><strong>Languages Known:</strong> <?= htmlspecialchars($user['languages_known'] ?? 'N/A'); ?></p>
-                <p><strong>Profile Summary:</strong> <?= nl2br(htmlspecialchars($user['profile_summary'] ?? 'N/A')); ?></p>
-                <?php if (!empty($user['resume'])): ?>
-                    <p><strong>Resume:</strong> <a href="uploads/resumes/<?= htmlspecialchars($user['resume']); ?>" target="_blank">View Resume</a></p>
-                <?php else: ?>
-                    <p><strong>Resume:</strong> Not uploaded</p>
-                <?php endif; ?>
-            </div>
-        </div>
+    <div class="card-header">Personal Information</div>
+    <div class="card-body">
+        <p><strong>Name:</strong> <?= htmlspecialchars($user['name']); ?></p>
+        <p><strong>Email:</strong> <?= htmlspecialchars($user['email']); ?></p>
+        <p><strong>Phone:</strong> <?= htmlspecialchars($user['phone']); ?></p>
+        <p><strong>Date of Birth:</strong> <?= htmlspecialchars($user['dob'] ?? 'N/A'); ?></p>
+        <p><strong>Father's Name:</strong> <?= htmlspecialchars($user['father_name'] ?? 'N/A'); ?></p>
+        <p><strong>Mother's Name:</strong> <?= htmlspecialchars($user['mother_name'] ?? 'N/A'); ?></p>
+        <p><strong>Address:</strong> <?= htmlspecialchars($user['address'] ?? 'N/A'); ?></p>
+        <p><strong>Languages Known:</strong> <?= htmlspecialchars($user['languages_known'] ?? 'N/A'); ?></p>
+        <p><strong>Profile Summary:</strong> <?= nl2br(htmlspecialchars($user['profile_summary'] ?? 'N/A')); ?></p>
+        <?php if (!empty($user['resume'])): ?>
+            <p><strong>Resume:</strong> <a href="uploads/resumes/<?= htmlspecialchars($user['resume']); ?>" target="_blank">View Resume</a></p>
+        <?php else: ?>
+            <p><strong>Resume:</strong> Not uploaded</p>
+        <?php endif; ?>
+    </div>
+</div>
+
 
 
         <!-- Skills -->
