@@ -46,9 +46,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     $updateStmt->close();
 
-    $resetLink = "http://localhost/syntax-work/job-system-tce/reset-password.php?token=$resetToken";
-    $portalLink = "https://yourwebsite.com/";
-    $companyName = "Your Company";
+    $resetLink = "https://techcadd.com/placement-cell/reset-password.php?token=$resetToken";
+    $portalLink = "https://techcadd.com/placement-cell";
+    $companyName = "TechCadd Placement Cell";
     $year = date("Y");
 
     $mail = new PHPMailer();
