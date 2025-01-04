@@ -11,8 +11,8 @@ include 'common-header.php';
 
                         <div class="d-flex justify-content-center py-4">
                             <a href="index.html" class="logo d-flex align-items-center w-auto">
-                                <img src="assets/img/logo.png" alt="">
-                                <span class="d-none d-lg-block">NiceAdmin</span>
+                                <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP6Zh9d1FIeutRKFbg-0EhB2czdDgwEoTLOw&s" alt=""> -->
+                                <span class="d-none d-lg-block">TCE</span>
                             </a>
                         </div><!-- End Logo -->
 

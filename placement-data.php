@@ -38,7 +38,8 @@ $jobSeekerResult = $conn->query($jobSeekerQuery);
                         <?php while ($row = $jobSeekerResult->fetch_assoc()): ?>
                             <tr>
                                 <td><?= $sno++; ?></td>
-                                <td><?= htmlspecialchars($row['name']); ?></td>
+                                <td> <a href="view-job-seeker.php?id=<?= $row['id']; ?>"><?= htmlspecialchars($row['name']); ?></a></td>
+                               
                                 <td><?= htmlspecialchars($row['father_name']); ?></td>
                                 <td><?= htmlspecialchars($row['phone']); ?></td>
                                 <td>
