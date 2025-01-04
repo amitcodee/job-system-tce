@@ -55,12 +55,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mail->isSMTP();
     $mail->Host = "smtp.gmail.com";
     $mail->SMTPAuth = true;
-    $mail->Username = "panel.tce@gmail.com"; // Your SMTP email
-    $mail->Password = "azlmtcraonajceci"; // Your SMTP password
+    $mail->Username = "studentplacement.tce@gmail.com"; // Your SMTP email
+    $mail->Password = "cntfmnvjuhcyfzyi"; // Your SMTP password
     $mail->Port = 587;
     $mail->SMTPSecure = 'tls';
 
-    $mail->setFrom("panel.tce@gmail.com", $companyName);
+    $mail->setFrom("studentplacement.tce@gmail.com", $companyName);
     $mail->addAddress($userEmail, $userName);
 
     $mail->isHTML(true);
