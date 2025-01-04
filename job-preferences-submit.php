@@ -1,6 +1,11 @@
 <?php
 session_start();
+require_once 'php-mailer/PHPMailer.php';
+require_once 'php-mailer/SMTP.php';
+require_once 'php-mailer/Exception.php';
 include 'config.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
@@ -39,7 +44,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bind_param("isssss", $userId, $jobTitle, $category, $location, $salaryExpectation, $additionalNotes);
 
     if ($stmt->execute()) {
-        echo "<script>alert('Job preference saved successfully.'); window.location.href='jobs.php';</script>";
+        // Fetch user name
+        $userStmt = $conn->prepare("SELECT name FROM users WHERE id = ?");
+        $userStmt->bind_param("i", $userId);
+        $userStmt->execute();
+        $userResult = $userStmt->get_result()->fetch_assoc();
+        $userName = $userResult['name'];
+        $userStmt->close();
+
+        // Fetch admin email
+        $adminStmt = $conn->prepare("SELECT email FROM users WHERE role = 'admin' LIMIT 1");
+        $adminStmt->execute();
+        $adminResult = $adminStmt->get_result()->fetch_assoc();
+        $adminEmail = $adminResult['email'];
+        $adminStmt->close();
+
+        // Send email notification
+        $companyName = "TCE Placement Cell";
+
+        $mail = new PHPMailer();
+        $mail->isSMTP();
+        $mail->Host = "smtp.gmail.com";
+        $mail->SMTPAuth = true;
+        $mail->Username = "panel.tce@gmail.com"; // Replace with your SMTP email
+        $mail->Password = "azlmtcraonajceci"; // Replace with your SMTP password
+        $mail->Port = 587;
+        $mail->SMTPSecure = 'tls';
+
+        $mail->setFrom("panel.tce@gmail.com", $companyName); // Replace with your email
+        $mail->addAddress($adminEmail);
+
+        $mail->isHTML(true);
+        $mail->Subject = "New Job Preference Added";
+        $mail->Body = "
+            <h4>New Job Preference Added</h4>
+            <p><b>Added By:</b> $userName</p>
+            <p><b>Title:</b> $jobTitle</p>
+            <p><b>Category:</b> $category</p>
+        ";
+
+        if ($mail->send()) {
+            echo "<script>alert('Job preference saved successfully and notification sent.'); window.location.href='jobs.php';</script>";
+        } else {
+            echo "<script>alert('Job preference saved, but failed to send notification email.'); window.location.href='jobs.php';</script>";
+        }
     } else {
         echo "<script>alert('Failed to save job preference. Please try again.'); window.history.back();</script>";
     }

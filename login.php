@@ -10,10 +10,7 @@ include 'common-header.php';
                     <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
                         <div class="d-flex justify-content-center py-4">
-                            <a href="index.html" class="logo d-flex align-items-center w-auto">
-                                <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP6Zh9d1FIeutRKFbg-0EhB2czdDgwEoTLOw&s" alt=""> -->
-                                <span class="d-none d-lg-block">TCE</span>
-                            </a>
+                       <img src="skill-india.png" alt="" class="img-fluid">
                         </div><!-- End Logo -->
 
                         <div class="card mb-3">
