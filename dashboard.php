@@ -93,7 +93,7 @@ if (!$userRole) {
                             $jobCount = $conn->query("SELECT COUNT(*) AS count FROM jobs WHERE posted_by = $userId")->fetch_assoc()['count'];
                             ?>
                             <p class="card-text"><?= $jobCount ?> Jobs</p>
-                            <a href="my-jobs.php" class="btn btn-primary">View All</a>
+                            <!-- <a href="my-jobs.php" class="btn btn-primary">View All</a> -->
                         </div>
                     </div>
                 </div>
@@ -106,7 +106,7 @@ if (!$userRole) {
                             $companyCount = $conn->query("SELECT COUNT(*) AS count FROM companies WHERE added_by = $userId")->fetch_assoc()['count'];
                             ?>
                             <p class="card-text"><?= $companyCount ?> Companies</p>
-                            <a href="my-companies.php" class="btn btn-primary">View All</a>
+                            <!-- <a href="my-companies.php" class="btn btn-primary">View All</a> -->
                         </div>
                     </div>
                 </div>

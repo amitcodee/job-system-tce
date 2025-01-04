@@ -77,7 +77,7 @@ $jobSeekerResult = $conn->query($jobSeekerQuery);
                                                 <p><strong>Company Name:</strong> <?= htmlspecialchars($row['company_name']); ?></p>
                                                 <p><strong>Description:</strong> <?= nl2br(htmlspecialchars($row['description'])); ?></p>
                                                 <p><strong>Joining Letter:</strong> 
-                                                    <a href="uploads/join_letters/<?= htmlspecialchars($row['join_letter']); ?>" target="_blank">View Letter</a>
+                                                    <a href="uploads/joining_letters/<?= htmlspecialchars($row['join_letter']); ?>" target="_blank">View Letter</a>
                                                 </p>
                                             <?php else: ?>
                                                 <p>No placement data available.</p>
