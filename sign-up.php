@@ -66,7 +66,7 @@ include 'common-header.php';
                                         <select name="role" id="role" class="form-select" required>
                                             <option value="">Select Role</option>
                                             <option value="job_seeker">Job Seeker</option>
-                                            <option value="recruiter">Recruiter</option>
+                                            <option value="job_provider">Recruiter</option>
                                         </select>
                                         <div class="invalid-feedback">Please select your role.</div>
                                     </div>
