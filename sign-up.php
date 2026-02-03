@@ -1,5 +1,12 @@
 <?php
 include 'common-header.php';
+// Simple math captcha
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+$captchaA = rand(1, 9);
+$captchaB = rand(1, 9);
+$_SESSION['signup_captcha'] = $captchaA + $captchaB;
 ?>
 <main>
     <div class="container">
@@ -60,14 +67,12 @@ include 'common-header.php';
                                         <div class="invalid-feedback" id="confirmPasswordFeedback">Please confirm your password.</div>
                                     </div>
 
+                                    <input type="hidden" name="role" value="job_seeker">
+
                                     <div class="col-12">
-                                        <label for="role" class="form-label">Role</label>
-                                        <select name="role" id="role" class="form-select" required>
-                                            <option value="">Select Role</option>
-                                            <option value="job_seeker">Job Seeker</option>
-                                            <option value="job_provider">Recruiter</option>
-                                        </select>
-                                        <div class="invalid-feedback">Please select your role.</div>
+                                        <label for="captcha" class="form-label">Captcha: What is <?= $captchaA ?> + <?= $captchaB ?>? *</label>
+                                        <input type="text" name="captcha" class="form-control" id="captcha" required>
+                                        <div class="invalid-feedback">Please solve the captcha.</div>
                                     </div>
 
                                     <div class="col-12">

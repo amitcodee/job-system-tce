@@ -9,11 +9,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = trim($_POST['password']);
     $confirm_password = trim($_POST['confirm_password']);
     $role = trim($_POST['role']);
+    $captcha = isset($_POST['captcha']) ? trim($_POST['captcha']) : '';
     $agree = isset($_POST['agree']);
 
     // Validate input fields
-    if (empty($name) || empty($email) || empty($phone) || empty($password) || empty($confirm_password) || empty($role)) {
+    if (empty($name) || empty($email) || empty($phone) || empty($password) || empty($confirm_password) || empty($role) || empty($captcha)) {
         $_SESSION['error'] = 'All fields are required.';
+        header('Location: signup.php');
+        exit();
+    }
+
+    if (!isset($_SESSION['signup_captcha']) || (int)$captcha !== (int)$_SESSION['signup_captcha']) {
+        $_SESSION['error'] = 'Invalid captcha answer.';
+        header('Location: signup.php');
+        exit();
+    }
+
+    unset($_SESSION['signup_captcha']);
+
+    if ($role !== 'job_seeker') {
+        $_SESSION['error'] = 'Only job seeker registration is allowed.';
         header('Location: signup.php');
         exit();
     }

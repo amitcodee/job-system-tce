@@ -66,8 +66,6 @@ $stmt->close();
             // Redirect to specific profile pages based on the user role
             if ($userRole === 'admin') {
                 echo 'admin-profile.php';
-            } elseif ($userRole === 'job_provider') {
-                echo 'job-provider-profile.php';
             } elseif ($userRole === 'job_seeker') {
                 echo 'job-seeker-profile.php';
             } else {

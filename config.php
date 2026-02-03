@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "job-system-tce";
+$dbname = "job-system";
 
 try {
     // Create a new database connection

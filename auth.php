@@ -26,6 +26,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
 
+        if ($user['role'] === 'job_provider') {
+            echo "<script>alert('This account type is no longer supported.'); window.location.href='index.php';</script>";
+            exit();
+        }
+
         // Verify password
         if (password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];

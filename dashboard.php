@@ -20,7 +20,7 @@ $userRoleResult = $stmt->get_result();
 $userRole = $userRoleResult->fetch_assoc()['role'] ?? null;
 $stmt->close();
 
-if (!$userRole) {
+if (!$userRole || !in_array($userRole, ['admin', 'job_seeker'], true)) {
     echo "<script>alert('Invalid user role.'); window.location.href='logout.php';</script>";
     exit();
 }
@@ -40,73 +40,7 @@ if (!$userRole) {
                             $jobCount = $conn->query("SELECT COUNT(*) AS count FROM jobs")->fetch_assoc()['count'];
                             ?>
                             <p class="card-text"><?= $jobCount ?> Jobs</p>
-                            <a href="all-job.php" class="btn btn-primary">View All</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-3">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <h5 class="card-title">Job Seekers</h5>
-                            <?php
-                            $seekerCount = $conn->query("SELECT COUNT(*) AS count FROM users WHERE role = 'job_seeker'")->fetch_assoc()['count'];
-                            ?>
-                            <p class="card-text"><?= $seekerCount ?> Job Seekers</p>
-                            <a href="all-job-seekers.php" class="btn btn-primary">View All</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-3">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <h5 class="card-title">Job Providers</h5>
-                            <?php
-                            $providerCount = $conn->query("SELECT COUNT(*) AS count FROM users WHERE role = 'job_provider'")->fetch_assoc()['count'];
-                            ?>
-                            <p class="card-text"><?= $providerCount ?> Job Providers</p>
-                            <a href="all-job-providers.php" class="btn btn-primary">View All</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-3">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <h5 class="card-title">Companies</h5>
-                            <?php
-                            $companyCount = $conn->query("SELECT COUNT(*) AS count FROM companies")->fetch_assoc()['count'];
-                            ?>
-                            <p class="card-text"><?= $companyCount ?> Companies</p>
-                            <a href="all-companies.php" class="btn btn-primary">View All</a>
-                        </div>
-                    </div>
-                </div>
-            <?php elseif ($userRole === 'job_provider'): ?>
-                <!-- Job Provider Dashboard -->
-                <div class="col-md-6 col-lg-3">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <h5 class="card-title">My Jobs</h5>
-                            <?php
-                            $jobCount = $conn->query("SELECT COUNT(*) AS count FROM jobs WHERE posted_by = $userId")->fetch_assoc()['count'];
-                            ?>
-                            <p class="card-text"><?= $jobCount ?> Jobs</p>
-                            <!-- <a href="my-jobs.php" class="btn btn-primary">View All</a> -->
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-3">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <h5 class="card-title">My Companies</h5>
-                            <?php
-                            $companyCount = $conn->query("SELECT COUNT(*) AS count FROM companies WHERE added_by = $userId")->fetch_assoc()['count'];
-                            ?>
-                            <p class="card-text"><?= $companyCount ?> Companies</p>
-                            <!-- <a href="my-companies.php" class="btn btn-primary">View All</a> -->
+                            <a href="all-joblist.php" class="btn btn-primary">View All</a>
                         </div>
                     </div>
                 </div>

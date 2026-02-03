@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 
 // Validate ID parameter
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-    echo "<script>alert('Invalid job ID.'); window.location.href='all-job.php';</script>";
+    echo "<script>alert('Invalid job ID.'); window.location.href='all-joblist.php';</script>";
     exit();
 }
 
@@ -40,7 +40,7 @@ $deleteStmt = $conn->prepare("DELETE FROM jobs WHERE id = ?");
 $deleteStmt->bind_param("i", $jobId);
 
 if ($deleteStmt->execute()) {
-    echo "<script>alert('Job deleted successfully.'); window.location.href='all-job.php';</script>";
+    echo "<script>alert('Job deleted successfully.'); window.location.href='all-joblist.php';</script>";
 } else {
     echo "<script>alert('Failed to delete the job. Please try again.'); window.history.back();</script>";
 }
