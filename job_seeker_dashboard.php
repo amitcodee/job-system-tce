@@ -1,8 +1,41 @@
 <?php
 session_start();
 include 'common-header.php';
+include 'config.php';
 include 'header.php';
 include 'sidenav.php';
+
+// Ensure the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    echo "<script>alert('You must be logged in to apply for a job.'); window.location.href='login.php';</script>";
+    exit();
+}
+
+// Only enforce profile completion when arriving from Apply action
+if (isset($_GET['apply'])) {
+    $userId = $_SESSION['user_id'];
+    $stmt = $conn->prepare("SELECT name, dob, father_name, mother_name, address, languages_known, profile_summary, resume, resume_path FROM users WHERE id = ?");
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $user = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+
+    $missingFields = [];
+    if (empty(trim($user['name'] ?? ''))) { $missingFields[] = 'Full Name'; }
+    if (empty(trim($user['dob'] ?? ''))) { $missingFields[] = 'Date of Birth'; }
+    if (empty(trim($user['father_name'] ?? ''))) { $missingFields[] = "Father's Name"; }
+    if (empty(trim($user['mother_name'] ?? ''))) { $missingFields[] = "Mother's Name"; }
+    if (empty(trim($user['address'] ?? ''))) { $missingFields[] = 'Address'; }
+    if (empty(trim($user['languages_known'] ?? ''))) { $missingFields[] = 'Languages Known'; }
+    if (empty(trim($user['profile_summary'] ?? ''))) { $missingFields[] = 'Profile Summary'; }
+    if (empty(trim($user['resume'] ?? '')) && empty(trim($user['resume_path'] ?? ''))) { $missingFields[] = 'Resume'; }
+
+    if (!empty($missingFields)) {
+        $fieldsText = implode(', ', $missingFields);
+        echo "<script>alert('Please complete your profile before applying. Missing: {$fieldsText}.'); window.location.href='job-seeker-profile.php';</script>";
+        exit();
+    }
+}
 ?>
 
 <main id="main" class="main">

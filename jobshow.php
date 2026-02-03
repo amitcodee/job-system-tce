@@ -12,11 +12,37 @@ $query = "
     FROM jobs
     ORDER BY id DESC
 ";
-$result = $conn->query($query);
+$jobsResult = $conn->query($query);
 
 if (isset($_SESSION['user_id'])) {
     include 'header.php';
     include 'sidenav.php';
+}
+
+$profileIncomplete = false;
+$missingFieldsText = '';
+if (isset($_SESSION['user_id'])) {
+    $userId = $_SESSION['user_id'];
+    $stmt = $conn->prepare("SELECT name, dob, father_name, mother_name, address, languages_known, profile_summary, resume, resume_path FROM users WHERE id = ?");
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $user = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+
+    $missingFields = [];
+    if (empty(trim($user['name'] ?? ''))) { $missingFields[] = 'Full Name'; }
+    if (empty(trim($user['dob'] ?? ''))) { $missingFields[] = 'Date of Birth'; }
+    if (empty(trim($user['father_name'] ?? ''))) { $missingFields[] = "Father's Name"; }
+    if (empty(trim($user['mother_name'] ?? ''))) { $missingFields[] = "Mother's Name"; }
+    if (empty(trim($user['address'] ?? ''))) { $missingFields[] = 'Address'; }
+    if (empty(trim($user['languages_known'] ?? ''))) { $missingFields[] = 'Languages Known'; }
+    if (empty(trim($user['profile_summary'] ?? ''))) { $missingFields[] = 'Profile Summary'; }
+    if (empty(trim($user['resume'] ?? '')) && empty(trim($user['resume_path'] ?? ''))) { $missingFields[] = 'Resume'; }
+
+    if (!empty($missingFields)) {
+        $profileIncomplete = true;
+        $missingFieldsText = implode(', ', $missingFields);
+    }
 }
 ?>
 
@@ -26,9 +52,9 @@ if (isset($_SESSION['user_id'])) {
             <h2 class="mb-0">Available Jobs</h2>
         </div>
 
-        <?php if ($result && $result->num_rows > 0): ?>
+        <?php if ($jobsResult && $jobsResult->num_rows > 0): ?>
             <div class="row g-4">
-                <?php while ($job = $result->fetch_assoc()): ?>
+                        <?php while ($job = $jobsResult->fetch_assoc()): ?>
                     <div class="col-md-6 col-lg-4">
                         <div class="card h-100">
                             <div class="card-body">
@@ -79,7 +105,11 @@ if (isset($_SESSION['user_id'])) {
                                 </div>
                                 <div class="modal-footer">
                                     <?php if (isset($_SESSION['user_id'])): ?>
-                                        <a class="btn btn-success" href="job_seeker_dashboard.php">Apply Now</a>
+                                        <?php if ($profileIncomplete): ?>
+                                            <a class="btn btn-success" href="job-seeker-profile.php" onclick="alert('Please complete your profile before applying. Missing: <?= htmlspecialchars($missingFieldsText); ?>.');">Apply Now</a>
+                                        <?php else: ?>
+                                            <a class="btn btn-success" href="job_seeker_dashboard.php?apply=1">Apply Now</a>
+                                        <?php endif; ?>
                                     <?php else: ?>
                                         <a class="btn btn-success" href="login.php">Login to Apply</a>
                                     <?php endif; ?>
@@ -90,7 +120,7 @@ if (isset($_SESSION['user_id'])) {
                     </div>
                 <?php endwhile; ?>
             </div>
-        <?php elseif ($result === false): ?>
+        <?php elseif ($jobsResult === false): ?>
             <p>Jobs are not available right now. Please try again later.</p>
         <?php else: ?>
             <p>No jobs found.</p>

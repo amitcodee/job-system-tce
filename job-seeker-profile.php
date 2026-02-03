@@ -37,15 +37,15 @@ $stmt->close();
                             </div>
                             <div class="mb-3">
                                 <label for="dob" class="form-label"><strong>Date of Birth:</strong></label>
-                                <input type="date" id="dob" name="dob" class="form-control" value="<?= htmlspecialchars($user['dob'] ?? ''); ?>">
+                                <input type="date" id="dob" name="dob" class="form-control" value="<?= htmlspecialchars($user['dob'] ?? ''); ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label for="father_name" class="form-label"><strong>Father's Name:</strong></label>
-                                <input type="text" id="father_name" name="father_name" class="form-control" value="<?= htmlspecialchars($user['father_name'] ?? ''); ?>">
+                                <input type="text" id="father_name" name="father_name" class="form-control" value="<?= htmlspecialchars($user['father_name'] ?? ''); ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label for="mother_name" class="form-label"><strong>Mother's Name:</strong></label>
-                                <input type="text" id="mother_name" name="mother_name" class="form-control" value="<?= htmlspecialchars($user['mother_name'] ?? ''); ?>">
+                                <input type="text" id="mother_name" name="mother_name" class="form-control" value="<?= htmlspecialchars($user['mother_name'] ?? ''); ?>" required>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -63,17 +63,17 @@ $stmt->close();
                             </div>
                             <div class="mb-3">
                                 <label for="languages_known" class="form-label"><strong>Languages Known:</strong></label>
-                                <input type="text" id="languages_known" name="languages_known" class="form-control" value="<?= htmlspecialchars($user['languages_known'] ?? ''); ?>">
+                                <input type="text" id="languages_known" name="languages_known" class="form-control" value="<?= htmlspecialchars($user['languages_known'] ?? ''); ?>" required>
                             </div>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="profile_summary" class="form-label"><strong>Profile Summary:</strong></label>
-                        <textarea id="profile_summary" name="profile_summary" class="form-control" rows="4"><?= htmlspecialchars($user['profile_summary'] ?? ''); ?></textarea>
+                        <textarea id="profile_summary" name="profile_summary" class="form-control" rows="4" required><?= htmlspecialchars($user['profile_summary'] ?? ''); ?></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="resume" class="form-label"><strong>Upload Resume:</strong></label>
-                        <input type="file" id="resume" name="resume" class="form-control">
+                        <input type="file" id="resume" name="resume" class="form-control" <?= empty($user['resume']) ? 'required' : '' ?>>
                         <?php if (!empty($user['resume'])): ?>
                             <p class="mt-2">Current Resume: <a href="uploads/resumes/<?= htmlspecialchars($user['resume']); ?>" target="_blank">View Resume</a></p>
                         <?php endif; ?>
