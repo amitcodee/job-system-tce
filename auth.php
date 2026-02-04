@@ -19,28 +19,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Prepare and execute the query
-    $stmt = $conn->prepare("SELECT * FROM users WHERE email = ? OR phone = ?");
+    $stmt = $conn->prepare("SELECT id, name, password, role FROM users WHERE email = ? OR phone = ? LIMIT 1");
     $stmt->bind_param("ss", $username, $username);
     $stmt->execute();
-    $result = $stmt->get_result();
+    $stmt->store_result();
 
-    if ($result->num_rows > 0) {
-        $user = $result->fetch_assoc();
+    if ($stmt->num_rows > 0) {
+        $stmt->bind_result($dbId, $dbName, $dbPassword, $dbRole);
+        $stmt->fetch();
 
-        if ($user['role'] === 'job_provider') {
+        if ($dbRole === 'job_provider') {
             echo "<script>alert('This account type is no longer supported.'); window.location.href='index.php';</script>";
             exit();
         }
 
-        if ($user['role'] === 'deactive') {
+        if ($dbRole === 'deactive') {
             echo "<script>alert('Your account is deactivated. Please contact admin.'); window.location.href='index.php';</script>";
             exit();
         }
 
         // Verify password
-        if (password_verify($password, $user['password'])) {
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['username'] = $user['name'];
+        if (password_verify($password, $dbPassword)) {
+            $_SESSION['user_id'] = $dbId;
+            $_SESSION['username'] = $dbName;
             $basePath = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
             $host = $_SERVER['HTTP_HOST'] ?? '';
             $redirectUrl = ($host ? ('//' . $host) : '') . $basePath . '/dashboard.php';
