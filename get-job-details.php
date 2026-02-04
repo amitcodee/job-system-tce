@@ -33,7 +33,7 @@ $roleStmt->close();
 
 // Fetch job details
 $jobStmt = $conn->prepare(
-    "SELECT id, title, company, location, salary, description, requirements, created_at, posted_by 
+    "SELECT id, title, company_name, location, salary, description, created_at, posted_by 
      FROM jobs 
      WHERE id = ?"
 );
@@ -62,11 +62,11 @@ $jobData = [
     'success' => true,
     'job' => [
         'title' => htmlspecialchars($job['title'] ?? ''),
-        'company' => htmlspecialchars($job['company'] ?? 'N/A'),
+        'company' => htmlspecialchars($job['company_name'] ?? 'N/A'),
         'location' => htmlspecialchars($job['location'] ?? 'N/A'),
         'salary' => htmlspecialchars($job['salary'] ?? 'N/A'),
         'description' => nl2br(htmlspecialchars($job['description'] ?? 'No description available')),
-        'requirements' => nl2br(htmlspecialchars($job['requirements'] ?? 'No requirements listed')),
+        'requirements' => nl2br(htmlspecialchars('No requirements listed')),
         'created_at' => htmlspecialchars($job['created_at'] ?? '')
     ]
 ];

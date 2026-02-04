@@ -331,7 +331,7 @@ $marqueeJobs = array_slice($allJobs, 0, 8);
                         </div>
                     </div>
                     <div class="modal-footer border-0">
-                        <a href="login.php" class="btn btn-apply-glass w-100 btn-lg">Apply Now</a>
+                        <a href="https://techcadd.com/placement-cell/login.php" class="btn btn-apply-glass w-100 btn-lg">Apply Now</a>
                     </div>
                 </div>
             </div>
