@@ -46,21 +46,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     $updateStmt->close();
 
-    $resetLink = "https://techcadd.com/placement-cell/reset-password.php?token=$resetToken";
-    $portalLink = "https://techcadd.com/placement-cell";
+    $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+    $basePath = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'])), '/');
+    $baseUrl = $scheme . '://' . $host . $basePath;
+
+    $resetLink = $baseUrl . "/reset-password.php?token=" . urlencode($resetToken);
+    $portalLink = $baseUrl;
     $companyName = "TechCadd Placement Cell";
     $year = date("Y");
 
+    $smtpHost = getenv('SMTP_HOST') ?: "smtp.gmail.com";
+    $smtpUser = getenv('SMTP_USER') ?: "studentplacement.tce@gmail.com";
+    $smtpPass = getenv('SMTP_PASS') ?: "cntfmnvjuhcyfzyi";
+    $smtpPort = getenv('SMTP_PORT') ? (int)getenv('SMTP_PORT') : 587;
+    $smtpSecure = getenv('SMTP_SECURE') ?: 'tls';
+    $fromEmail = getenv('SMTP_FROM') ?: $smtpUser;
+    $fromName = getenv('SMTP_FROM_NAME') ?: $companyName;
+
     $mail = new PHPMailer();
     $mail->isSMTP();
-    $mail->Host = "smtp.gmail.com";
+    $mail->Host = $smtpHost;
     $mail->SMTPAuth = true;
-    $mail->Username = "studentplacement.tce@gmail.com"; // Your SMTP email
-    $mail->Password = "cntfmnvjuhcyfzyi"; // Your SMTP password
-    $mail->Port = 587;
-    $mail->SMTPSecure = 'tls';
+    $mail->Username = $smtpUser; // SMTP username
+    $mail->Password = $smtpPass; // SMTP password
+    $mail->Port = $smtpPort;
+    $mail->SMTPSecure = $smtpSecure;
 
-    $mail->setFrom("studentplacement.tce@gmail.com", $companyName);
+    $mail->setFrom($fromEmail, $fromName);
     $mail->addAddress($userEmail, $userName);
 
     $mail->isHTML(true);

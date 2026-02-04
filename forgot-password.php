@@ -12,7 +12,7 @@ include 'common-header.php';
                         <div class="my-2">
                             <img src="skill-india.png" alt="" class="img-fluid">
                         </div>
-                        </><!-- End Logo -->
+                        </div><!-- End Logo -->
 
                         <div class="card mb-3">
 

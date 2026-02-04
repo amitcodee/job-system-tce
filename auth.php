@@ -6,6 +6,11 @@ if (session_status() == PHP_SESSION_NONE) {
 
 include 'config.php';
 
+if (!isset($conn) || !$conn) {
+    echo "<script>alert('Database connection error. Please contact admin.'); window.location.href='index.php';</script>";
+    exit();
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = trim($_POST['username']);
     $password = trim($_POST['password']);
