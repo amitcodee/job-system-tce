@@ -1,10 +1,6 @@
 <?php
 // Start the session and check for errors
-ob_start();
-session_start();
-if (!isset($_SESSION)) {
-    die("Session is not initialized. Please check your server's session settings.");
-}
+@session_start();
 
 include 'config.php'; // Include the database configuration file
 
@@ -21,7 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Prepare and execute the query
     $stmt = $conn->prepare("SELECT id, name, password, role FROM users WHERE email = ? OR phone = ? LIMIT 1");
     if (!$stmt) {
-        error_log('Auth prepare failed: ' . ($conn->error ?? 'unknown error'));
         echo "<script>alert('Server error. Please contact admin.'); window.location.href='index.php';</script>";
         exit();
     }
@@ -47,13 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (password_verify($password, $dbPassword)) {
             $_SESSION['user_id'] = $dbId;
             $_SESSION['username'] = $dbName;
-            $basePath = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
-            $host = $_SERVER['HTTP_HOST'] ?? '';
-            $redirectUrl = ($host ? ('//' . $host) : '') . $basePath . '/dashboard.php';
-            header('Location: ' . $redirectUrl, true, 302);
-            echo "<meta http-equiv='refresh' content='0;url={$redirectUrl}'>";
-            echo "<script>window.location.href='" . $redirectUrl . "';</script>";
-            ob_end_flush();
+            echo "<script>window.location.href='dashboard.php';</script>";
             exit();
         } else {
             echo "<script>alert('Invalid password.'); window.location.href='index.php';</script>";
