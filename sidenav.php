@@ -49,6 +49,12 @@ $stmt->close();
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="interview-resume-help.php">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Interview & Resume Help</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="logout.php">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Logout</span>
@@ -75,9 +81,27 @@ $stmt->close();
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="all-applications.php">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Applications</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="all-job-seekers.php">
                     <i class="fas fa-users"></i>
                     <span>Job Seekers</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="all_message_query.php">
+                    <i class="fas fa-envelope"></i>
+                    <span>Messages</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="placements.php">
+                    <i class="fas fa-clipboard-check"></i>
+                    <span>Placements</span>
                 </a>
             </li>
             <li class="nav-item">

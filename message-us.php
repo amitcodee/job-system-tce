@@ -10,6 +10,10 @@ include 'config.php';
 <main id="main" class="main">
     <section class="section contact">
 
+        <?php if (isset($_GET['sent'])): ?>
+            <div class="alert alert-success">Your message has been sent successfully.</div>
+        <?php endif; ?>
+
         <div class="row gy-4">
 
             <div class="col-xl-6">

@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bind_param("ssss", $name, $email, $subject, $message);
 
     if ($stmt->execute()) {
-        echo "<script>alert('Your message has been sent. Thank you!'); window.history.back();</script>";
+        echo "<script>alert('Your message has been sent. Thank you!'); window.location.href='message-us.php?sent=1';</script>";
     } else {
         echo "<script>alert('Failed to send your message. Please try again.'); window.history.back();</script>";
     }

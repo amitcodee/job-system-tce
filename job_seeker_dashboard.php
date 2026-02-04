@@ -36,11 +36,78 @@ if (isset($_GET['apply'])) {
         exit();
     }
 }
+
+// Dashboard stats for job seeker
+$userId = $_SESSION['user_id'];
+$jobCount = (int) ($conn->query("SELECT COUNT(*) AS count FROM jobs")->fetch_assoc()['count'] ?? 0);
+
+$appliedCountStmt = $conn->prepare("SELECT COUNT(*) AS count FROM job_applications WHERE user_id = ?");
+$appliedCountStmt->bind_param("i", $userId);
+$appliedCountStmt->execute();
+$appliedCount = (int) ($appliedCountStmt->get_result()->fetch_assoc()['count'] ?? 0);
+$appliedCountStmt->close();
+
+$profileStmt = $conn->prepare("SELECT name, dob, father_name, mother_name, address, languages_known, profile_summary, resume, resume_path FROM users WHERE id = ?");
+$profileStmt->bind_param("i", $userId);
+$profileStmt->execute();
+$profile = $profileStmt->get_result()->fetch_assoc();
+$profileStmt->close();
+
+$fieldsTotal = 8;
+$fieldsFilled = 0;
+if (!empty(trim($profile['name'] ?? ''))) { $fieldsFilled++; }
+if (!empty(trim($profile['dob'] ?? ''))) { $fieldsFilled++; }
+if (!empty(trim($profile['father_name'] ?? ''))) { $fieldsFilled++; }
+if (!empty(trim($profile['mother_name'] ?? ''))) { $fieldsFilled++; }
+if (!empty(trim($profile['address'] ?? ''))) { $fieldsFilled++; }
+if (!empty(trim($profile['languages_known'] ?? ''))) { $fieldsFilled++; }
+if (!empty(trim($profile['profile_summary'] ?? ''))) { $fieldsFilled++; }
+if (!empty(trim($profile['resume'] ?? '')) || !empty(trim($profile['resume_path'] ?? ''))) { $fieldsFilled++; }
+$profileScore = (int) round(($fieldsFilled / $fieldsTotal) * 100);
 ?>
 
 <main id="main" class="main">
     <div class="container">
         <h2 class="text-center mb-4">Welcome to Your Dashboard</h2>
+
+        <div class="row g-3 mb-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Jobs</h5>
+                        <p class="card-text"><?= $jobCount ?> Jobs</p>
+                        <a href="jobshow.php" class="btn btn-primary">View Jobs</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Applied Jobs</h5>
+                        <p class="card-text"><?= $appliedCount ?> Applied</p>
+                        <a href="jobshow.php" class="btn btn-outline-primary">Explore</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Profile Score</h5>
+                        <p class="card-text"><?= $profileScore ?>%</p>
+                        <a href="job-seeker-profile.php" class="btn btn-outline-primary">Improve</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Interview & Resume Help</h5>
+                        <p class="card-text">Boost your preparation</p>
+                        <a href="interview-resume-help.php" class="btn btn-success">Open</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Essential Skills Section -->
         <div class="card mb-4">
             <div class="card-header">
