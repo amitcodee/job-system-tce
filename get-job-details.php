@@ -58,6 +58,10 @@ if ($userRole === 'admin' && $job['posted_by'] != $userId) {
 }
 
 // Format the job data
+$rawDescription = $job['description'] ?? '';
+$cleanDescription = preg_replace('/\sdata-[a-z0-9_-]+=("[^"]*"|\'[^\']*\')/i', '', $rawDescription);
+$cleanDescription = strip_tags($cleanDescription, '<p><br><ul><ol><li><strong><em><b><i><h1><h2><h3><h4><h5><h6><span>');
+
 $jobData = [
     'success' => true,
     'job' => [
@@ -65,7 +69,7 @@ $jobData = [
         'company' => htmlspecialchars($job['company_name'] ?? 'N/A'),
         'location' => htmlspecialchars($job['location'] ?? 'N/A'),
         'salary' => htmlspecialchars($job['salary'] ?? 'N/A'),
-        'description' => nl2br(htmlspecialchars($job['description'] ?? 'No description available')),
+        'description' => !empty($cleanDescription) ? $cleanDescription : '<p>No description available.</p>',
         'requirements' => nl2br(htmlspecialchars('No requirements listed')),
         'created_at' => htmlspecialchars($job['created_at'] ?? '')
     ]
