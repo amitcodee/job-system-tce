@@ -63,3 +63,37 @@ CREATE TABLE IF NOT EXISTS contact_messages (
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   KEY idx_contact_messages_created_at (created_at)
 ) ENGINE=InnoDB;
+
+-- Job applications table
+CREATE TABLE IF NOT EXISTS job_applications (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  job_id INT UNSIGNED NOT NULL,
+  user_id INT UNSIGNED NOT NULL,
+  applied_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE KEY uq_job_applications_job_user (job_id, user_id),
+  KEY idx_job_applications_job_id (job_id),
+  KEY idx_job_applications_user_id (user_id),
+  CONSTRAINT fk_job_applications_job FOREIGN KEY (job_id)
+    REFERENCES jobs (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT fk_job_applications_user FOREIGN KEY (user_id)
+    REFERENCES users (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+-- Placements table
+CREATE TABLE IF NOT EXISTS placements (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  user_id INT UNSIGNED NOT NULL,
+  company_name VARCHAR(150) NOT NULL,
+  profile VARCHAR(150) NOT NULL,
+  remarks TEXT NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  KEY idx_placements_user_id (user_id),
+  CONSTRAINT fk_placements_user FOREIGN KEY (user_id)
+    REFERENCES users (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+) ENGINE=InnoDB;

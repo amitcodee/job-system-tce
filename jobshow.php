@@ -43,6 +43,17 @@ if (isset($_SESSION['user_id'])) {
         $profileIncomplete = true;
         $missingFieldsText = implode(', ', $missingFields);
     }
+
+    $appliedJobIds = [];
+    $appliedStmt = $conn->prepare("SELECT job_id FROM job_applications WHERE user_id = ?");
+    $appliedStmt->bind_param("i", $userId);
+    if ($appliedStmt->execute()) {
+        $appliedResult = $appliedStmt->get_result();
+        while ($row = $appliedResult->fetch_assoc()) {
+            $appliedJobIds[(int) $row['job_id']] = true;
+        }
+    }
+    $appliedStmt->close();
 }
 ?>
 
@@ -108,7 +119,14 @@ if (isset($_SESSION['user_id'])) {
                                         <?php if ($profileIncomplete): ?>
                                             <a class="btn btn-success" href="job-seeker-profile.php" onclick="alert('Please complete your profile before applying. Missing: <?= htmlspecialchars($missingFieldsText); ?>.');">Apply Now</a>
                                         <?php else: ?>
-                                            <a class="btn btn-success" href="job_seeker_dashboard.php?apply=1">Apply Now</a>
+                                            <?php if (!empty($appliedJobIds[$job['id']])): ?>
+                                                <button class="btn btn-success" type="button" disabled>Applied</button>
+                                            <?php else: ?>
+                                                <form action="apply-job.php" method="POST" class="d-inline">
+                                                    <input type="hidden" name="job_id" value="<?= (int) $job['id']; ?>">
+                                                    <button class="btn btn-success" type="submit">Apply Now</button>
+                                                </form>
+                                            <?php endif; ?>
                                         <?php endif; ?>
                                     <?php else: ?>
                                         <a class="btn btn-success" href="login.php">Login to Apply</a>
