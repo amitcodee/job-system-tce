@@ -20,6 +20,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Prepare and execute the query
     $stmt = $conn->prepare("SELECT id, name, password, role FROM users WHERE email = ? OR phone = ? LIMIT 1");
+    if (!$stmt) {
+        error_log('Auth prepare failed: ' . ($conn->error ?? 'unknown error'));
+        echo "<script>alert('Server error. Please contact admin.'); window.location.href='index.php';</script>";
+        exit();
+    }
     $stmt->bind_param("ss", $username, $username);
     $stmt->execute();
     $stmt->store_result();
