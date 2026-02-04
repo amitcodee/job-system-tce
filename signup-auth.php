@@ -1,6 +1,9 @@
 <?php
-session_start();
-include 'config.php'; // Include the database configuration file
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+include 'config.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = trim($_POST['name']);
@@ -15,13 +18,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Validate input fields
     if (empty($name) || empty($email) || empty($phone) || empty($password) || empty($confirm_password) || empty($role) || empty($captcha)) {
         $_SESSION['error'] = 'All fields are required.';
-        header('Location: signup.php');
+        echo "<script>window.location.href='sign-up.php';</script>";
         exit();
     }
 
     if (!isset($_SESSION['signup_captcha']) || (int)$captcha !== (int)$_SESSION['signup_captcha']) {
         $_SESSION['error'] = 'Invalid captcha answer.';
-        header('Location: signup.php');
+        echo "<script>window.location.href='sign-up.php';</script>";
         exit();
     }
 
@@ -29,25 +32,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($role !== 'job_seeker') {
         $_SESSION['error'] = 'Only job seeker registration is allowed.';
-        header('Location: signup.php');
+        echo "<script>window.location.href='sign-up.php';</script>";
         exit();
     }
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $_SESSION['error'] = 'Invalid email format.';
-        header('Location: signup.php');
+        echo "<script>window.location.href='sign-up.php';</script>";
         exit();
     }
 
     if ($password !== $confirm_password) {
         $_SESSION['error'] = 'Passwords do not match.';
-        header('Location: signup.php');
+        echo "<script>window.location.href='sign-up.php';</script>";
         exit();
     }
 
     if (!$agree) {
         $_SESSION['error'] = 'You must agree to the terms and conditions.';
-        header('Location: signup.php');
+        echo "<script>window.location.href='sign-up.php';</script>";
         exit();
     }
 
@@ -60,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($stmt->num_rows > 0) {
         $_SESSION['error'] = 'Email or phone number already exists.';
         $stmt->close();
-        header('Location: signup.php');
+        echo "<script>window.location.href='sign-up.php';</script>";
         exit();
     }
 
@@ -74,19 +77,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($stmt->execute()) {
         $_SESSION['success'] = 'Registration successful! Please log in.';
         $stmt->close();
-        header('Location: login.php');
+        echo "<script>alert('Registration successful! Please log in.'); window.location.href='login.php';</script>";
         exit();
     } else {
         $_SESSION['error'] = 'Registration failed. Please try again.';
         $stmt->close();
-        header('Location: signup.php');
+        echo "<script>window.location.href='sign-up.php';</script>";
         exit();
     }
 
     $conn->close();
 } else {
     $_SESSION['error'] = 'Invalid request method.';
-    header('Location: signup.php');
+    echo "<script>window.location.href='sign-up.php';</script>";
     exit();
 }
 ?>

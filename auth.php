@@ -1,8 +1,10 @@
 <?php
-// Start the session and check for errors
-@session_start();
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
-include 'config.php'; // Include the database configuration file
+include 'config.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = trim($_POST['username']);
