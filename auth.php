@@ -1,5 +1,6 @@
 <?php
 // Start the session and check for errors
+ob_start();
 session_start();
 if (!isset($_SESSION)) {
     die("Session is not initialized. Please check your server's session settings.");
@@ -41,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['name'];
             header('Location: dashboard.php');
+            echo "<script>window.location.href='dashboard.php';</script>";
             exit();
         } else {
             echo "<script>alert('Invalid password.'); window.location.href='index.php';</script>";
