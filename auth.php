@@ -41,8 +41,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['name'];
-            header('Location: dashboard.php');
+            header('Location: dashboard.php', true, 302);
+            echo "<meta http-equiv='refresh' content='0;url=dashboard.php'>";
             echo "<script>window.location.href='dashboard.php';</script>";
+            ob_end_flush();
             exit();
         } else {
             echo "<script>alert('Invalid password.'); window.location.href='index.php';</script>";
