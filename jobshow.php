@@ -92,7 +92,7 @@ if (isset($_SESSION['user_id'])) {
                                     <p><strong>Title:</strong> <?= htmlspecialchars($job['title'] ?? ''); ?></p>
                                     <p><strong>Company:</strong> <?= htmlspecialchars($job['company_name'] ?? 'N/A'); ?></p>
                                     <?php
-                                    $rawDescription = $job['description'] ?? '';
+                                    $rawDescription = htmlspecialchars_decode($job['description'] ?? '', ENT_QUOTES);
                                     $companyWebsite = $job['company_website'] ?? '';
                                     if (empty($rawDescription) && !empty($companyWebsite) && preg_match('/<[^>]+>/', $companyWebsite)) {
                                         $rawDescription = $companyWebsite;
@@ -109,7 +109,7 @@ if (isset($_SESSION['user_id'])) {
                                     <p><strong>Description:</strong></p>
                                     <div class="border rounded p-3">
                                         <?php
-                                        $allowedTags = '<p><br><ul><ol><li><strong><b><em><i><u><a><table><thead><tbody><tr><th><td>';
+                                        $allowedTags = '<p><br><ul><ol><li><strong><b><em><i><u><a><table><thead><tbody><tr><th><td><span><h1><h2><h3><h4><h5><h6>';
                                         echo strip_tags($rawDescription, $allowedTags);
                                         ?>
                                     </div>

@@ -97,7 +97,7 @@ $jobs = $stmt->get_result();
                                             <p><strong>Location:</strong> <?= htmlspecialchars($job['location'] ?? ''); ?></p>
                                             <p><strong>Salary:</strong> <?= htmlspecialchars($job['salary'] ?? 'N/A'); ?></p>
                                             <p><strong>Company:</strong> <?= htmlspecialchars($job['company_name'] ?? 'N/A'); ?></p>
-                                            <p><strong>Description:</strong> <?= nl2br(htmlspecialchars($job['description'] ?? '')); ?></p>
+                                            <p><strong>Description:</strong> <?= strip_tags(htmlspecialchars_decode($job['description'] ?? '', ENT_QUOTES), '<p><br><strong><em><ul><ol><li><a><b><i><u><span><h1><h2><h3><h4><h5><h6>'); ?></p>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

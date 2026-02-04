@@ -58,7 +58,7 @@ if ($userRole === 'admin' && $job['posted_by'] != $userId) {
 }
 
 // Format the job data
-$rawDescription = $job['description'] ?? '';
+$rawDescription = htmlspecialchars_decode($job['description'] ?? '', ENT_QUOTES);
 $cleanDescription = preg_replace('/\sdata-[a-z0-9_-]+=("[^"]*"|\'[^\']*\')/i', '', $rawDescription);
 $cleanDescription = strip_tags($cleanDescription, '<p><br><ul><ol><li><strong><em><b><i><h1><h2><h3><h4><h5><h6><span>');
 
