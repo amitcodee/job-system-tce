@@ -1,9 +1,14 @@
 <?php
 // Database configuration
+// $servername = "localhost";
+// $username = "root";
+// $password = "";
+// $dbname = "job-system";
+
 $servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "job-system";
+$username = "techcff9_smartboy";
+$password = "@techcaddcomputer";
+$dbname = "techcff9_jobdB";
 
 try {
     // Create a new database connection
