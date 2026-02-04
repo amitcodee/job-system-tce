@@ -41,9 +41,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['name'];
-            header('Location: dashboard.php', true, 302);
-            echo "<meta http-equiv='refresh' content='0;url=dashboard.php'>";
-            echo "<script>window.location.href='dashboard.php';</script>";
+            $basePath = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
+            $host = $_SERVER['HTTP_HOST'] ?? '';
+            $redirectUrl = ($host ? ('//' . $host) : '') . $basePath . '/dashboard.php';
+            header('Location: ' . $redirectUrl, true, 302);
+            echo "<meta http-equiv='refresh' content='0;url={$redirectUrl}'>";
+            echo "<script>window.location.href='" . $redirectUrl . "';</script>";
             ob_end_flush();
             exit();
         } else {
